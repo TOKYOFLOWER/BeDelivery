@@ -1,471 +1,738 @@
+/** ## style.css
+ * 花定期配送管理システム - スタイル
+ */
+
+/* ============================================================================
+   基本スタイル
+   ============================================================================ */
+
+:root {
+  --primary-color: #e91e63;
+  --primary-dark: #c2185b;
+  --primary-light: #f8bbd9;
+  --secondary-color: #4caf50;
+  --background-color: #fafafa;
+  --surface-color: #ffffff;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --border-color: #e0e0e0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    line-height: 1.6;
-  }
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ============================================================================
+   ヘッダー
+   ============================================================================ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================================
+   ボタン
+   ============================================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-success {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #388e3c;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.btn-edit { color: #1976d2; }
+.btn-edit:hover { background-color: rgba(25, 118, 210, 0.1); }
+
+.btn-status { color: #7b1fa2; }
+.btn-status:hover { background-color: rgba(123, 31, 162, 0.1); }
+
+.btn-delete { color: #d32f2f; }
+.btn-delete:hover { background-color: rgba(211, 47, 47, 0.1); }
+
+/* ============================================================================
+   統計カード
+   ============================================================================ */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--surface-color);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--border-color);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.stat-card.stat-new { border-left-color: #ffc107; }
+.stat-card.stat-new .stat-value { color: #f57c00; }
+
+.stat-card.stat-processing { border-left-color: #2196f3; }
+.stat-card.stat-processing .stat-value { color: #1976d2; }
+
+.stat-card.stat-shipped { border-left-color: #4caf50; }
+.stat-card.stat-shipped .stat-value { color: #388e3c; }
+
+.stat-card.stat-cancelled { border-left-color: #9e9e9e; }
+.stat-card.stat-cancelled .stat-value { color: #616161; }
+
+/* ============================================================================
+   フィルター
+   ============================================================================ */
+
+.filters {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  padding: 20px;
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-group label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.filter-select,
+.filter-input {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  min-width: 160px;
+  transition: border-color 0.2s ease;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* ============================================================================
+   テーブル
+   ============================================================================ */
+
+.table-container {
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table thead {
+  background: #f5f5f5;
+}
+
+.order-table th {
+  padding: 14px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.order-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.order-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.order-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 60px 20px !important;
+  color: var(--text-secondary);
+}
+
+/* テーブル列幅 */
+.col-status { width: 90px; }
+.col-order-number { width: 180px; }
+.col-date { width: 100px; }
+.col-name { min-width: 120px; }
+.col-product { min-width: 150px; }
+.col-quantity { width: 60px; text-align: center; }
+.col-price { width: 100px; text-align: right; }
+.col-actions { width: 100px; }
+
+/* ============================================================================
+   ステータスバッジ
+   ============================================================================ */
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.status-new {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffc107;
+}
+
+.status-processing {
+  background-color: #cce5ff;
+  color: #004085;
+  border-color: #007bff;
+}
+
+.status-shipped {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #28a745;
+}
+
+.status-cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #dc3545;
+}
+
+/* ============================================================================
+   アクションボタン
+   ============================================================================ */
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+/* ============================================================================
+   モーダル
+   ============================================================================ */
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--surface-color);
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.modal-close:hover {
+  background-color: #f5f5f5;
+}
+
+.modal-body {
+  padding: 24px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* ============================================================================
+   フォーム
+   ============================================================================ */
+
+fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+legend {
+  padding: 0 10px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  flex: 100%;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 20px;
+}
+
+/* ============================================================================
+   ステータスモーダル
+   ============================================================================ */
+
+.status-modal-content {
+  max-width: 500px;
+}
+
+.status-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px 20px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: var(--radius-md);
+}
+
+.status-info dt {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.status-info dd {
+  font-weight: 600;
+}
+
+/* ============================================================================
+   ローディング
+   ============================================================================ */
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  margin-top: 16px;
+  color: var(--text-secondary);
+}
+
+/* ============================================================================
+   メッセージ
+   ============================================================================ */
+
+.message {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  z-index: 3000;
+  animation: messageSlideIn 0.3s ease;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.message-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.message-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left: 4px solid #ffc107;
+}
+
+.message-info {
+  background-color: #cce5ff;
+  color: #004085;
+  border-left: 4px solid #007bff;
+}
+
+/* ============================================================================
+   ダウンロードセクション（管理者用）
+   ============================================================================ */
+
+.download-section {
+  background: var(--surface-color);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.download-section h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.download-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================================
+   レスポンシブ
+   ============================================================================ */
+
+@media (max-width: 768px) {
   .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 12px;
   }
-
-  /* ヘッダー */
+  
   .header {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .header h1 {
-    font-size: 24px;
-    color: #2c3e50;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  /* 統計カード */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-
-  .stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-direction: column;
+    gap: 16px;
     text-align: center;
   }
-
-  .stat-label {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 8px;
+  
+  .header h1 {
+    font-size: 1.25rem;
   }
-
-  .stat-value {
-    font-size: 32px;
-    font-weight: bold;
-    color: #2c3e50;
+  
+  .header-actions {
+    justify-content: center;
   }
-
-  .stat-new .stat-value { color: #e74c3c; }
-  .stat-processing .stat-value { color: #3498db; }
-  .stat-shipped .stat-value { color: #27ae60; }
-  .stat-cancelled .stat-value { color: #95a5a6; }
-
-  /* フィルター */
+  
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
   .filters {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
-    align-items: flex-end;
-    flex-wrap: wrap;
-  }
-
-  .filter-group {
-    display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: stretch;
   }
-
-  .filter-group label {
-    font-size: 14px;
-    color: #666;
-  }
-
+  
   .filter-select,
   .filter-input {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+    min-width: auto;
+    width: 100%;
   }
-
-  .filter-input {
-    min-width: 300px;
-  }
-
-  /* テーブル */
+  
   .table-container {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow-x: auto;
   }
-
+  
   .order-table {
-    width: 100%;
-    border-collapse: collapse;
+    min-width: 900px;
   }
-
-  .order-table thead {
-    background-color: #34495e;
-    color: white;
-  }
-
-  .order-table th,
-  .order-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .order-table th {
-    font-weight: 600;
-    font-size: 14px;
-  }
-
-  .order-table td {
-    font-size: 14px;
-  }
-
-  .order-table tbody tr:hover {
-    background-color: #f8f9fa;
-  }
-
-  /* ステータスバッジ */
-  .status-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  .status-new {
-    background-color: #fee;
-    color: #e74c3c;
-  }
-
-  .status-processing {
-    background-color: #e3f2fd;
-    color: #3498db;
-  }
-
-  .status-shipped {
-    background-color: #e8f5e9;
-    color: #27ae60;
-  }
-
-  .status-cancelled {
-    background-color: #f5f5f5;
-    color: #95a5a6;
-  }
-
-  /* ボタン */
-  .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  }
-
-  .btn-primary {
-    background-color: #3498db;
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background-color: #2980b9;
-  }
-
-  .btn-success {
-    background-color: #27ae60;
-    color: white;
-  }
-
-  .btn-success:hover {
-    background-color: #229954;
-  }
-
-  .btn-secondary {
-    background-color: #95a5a6;
-    color: white;
-  }
-
-  .btn-secondary:hover {
-    background-color: #7f8c8d;
-  }
-
-  .btn-icon {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px;
-    transition: transform 0.2s;
-  }
-
-  .btn-icon:hover {
-    transform: scale(1.2);
-  }
-
-  .action-buttons {
-    display: flex;
-    gap: 5px;
-  }
-
-  .icon {
-    font-size: 16px;
-  }
-
-  /* ローディング */
-  .loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .loading p {
-    color: white;
-    margin-top: 20px;
-    font-size: 16px;
-  }
-
-  /* メッセージ */
-  .message {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px 20px;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    z-index: 10000;
-    font-weight: 600;
-  }
-
-  .message-success {
-    background-color: #27ae60;
-    color: white;
-  }
-
-  .message-error {
-    background-color: #e74c3c;
-    color: white;
-  }
-
-  .message-info {
-    background-color: #3498db;
-    color: white;
-  }
-
-  /* モーダル */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
-  }
-
+  
   .modal-content {
-    background-color: #fefefe;
-    margin: 2% auto;
-    width: 90%;
-    max-width: 900px;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    max-height: 90vh;
-    overflow-y: auto;
+    margin: 10px;
   }
-
-  .modal-header {
-    padding: 20px;
-    background-color: #34495e;
-    color: white;
-    border-radius: 8px 8px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .modal-header h2 {
-    margin: 0;
-    font-size: 20px;
-  }
-
-  .modal-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1;
-  }
-
-  .modal-close:hover {
-    color: #ddd;
-  }
-
-  .modal-body {
-    padding: 20px;
-  }
-
-  /* フォーム */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  fieldset {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 20px;
-  }
-
-  legend {
-    font-weight: 600;
-    color: #2c3e50;
-    padding: 0 10px;
-  }
-
+  
   .form-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-  }
-
-  .form-group {
-    display: flex;
     flex-direction: column;
-    gap: 5px;
   }
-
-  .form-group.full-width {
-    grid-column: 1 / -1;
+  
+  .form-group {
+    min-width: auto;
   }
-
-  .form-group label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
+  
+  .message {
+    left: 24px;
+    right: 24px;
   }
+}
 
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    font-family: inherit;
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
   }
-
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
   }
-
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
+  
+  .stat-value {
+    font-size: 1.5rem;
   }
-
-  /* レスポンシブ */
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: column;
-      gap: 15px;
-      align-items: stretch;
-    }
-
-    .header-actions {
-      flex-direction: column;
-    }
-
-    .filters {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .filter-input {
-      min-width: auto;
-      width: 100%;
-    }
-
-    .form-row {
-      grid-template-columns: 1fr;
-    }
-
-    .modal-content {
-      width: 95%;
-      margin: 5% auto;
-    }
-
-    .order-table {
-      font-size: 12px;
-    }
-
-    .order-table th,
-    .order-table td {
-      padding: 8px;
-    }
-  }
+}

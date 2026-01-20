@@ -3,15 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>花定期配送管理システム</title>
+  <title>花定期配送管理システム【管理者】</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>
+    .header { background: linear-gradient(135deg, #7b1fa2, #512da8); }
+    .admin-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <!-- ヘッダー -->
     <header class="header">
-      <h1>🌸 花定期配送管理システム</h1>
+      <h1>🌸 花定期配送管理システム <span class="admin-badge">管理者</span></h1>
       <div class="header-actions">
         <button id="refreshBtn" class="btn btn-secondary">
           <span>🔄</span> 更新
@@ -46,6 +56,22 @@
       </div>
     </div>
 
+    <!-- ダウンロードセクション -->
+    <div class="download-section">
+      <h3>📥 助ネコ形式ダウンロード</h3>
+      <div class="download-buttons">
+        <button id="downloadActiveBtn" class="btn btn-primary">
+          <span>📥</span> 有効な注文のみ（未処理・処理中）
+        </button>
+        <button id="downloadFilteredBtn" class="btn btn-secondary">
+          <span>📥</span> フィルタ条件でダウンロード
+        </button>
+        <button id="downloadAllBtn" class="btn btn-secondary">
+          <span>📥</span> 全件ダウンロード
+        </button>
+      </div>
+    </div>
+
     <!-- フィルター -->
     <div class="filters">
       <div class="filter-group">
@@ -61,6 +87,14 @@
       <div class="filter-group">
         <label for="searchText">検索</label>
         <input type="text" id="searchText" class="filter-input" placeholder="受注番号、注文者名、商品名など">
+      </div>
+      <div class="filter-group">
+        <label for="fromDate">注文日（から）</label>
+        <input type="date" id="fromDate" class="filter-input">
+      </div>
+      <div class="filter-group">
+        <label for="toDate">注文日（まで）</label>
+        <input type="date" id="toDate" class="filter-input">
       </div>
       <button id="applyFilterBtn" class="btn btn-secondary">フィルタ適用</button>
     </div>
@@ -310,6 +344,46 @@
             <button type="submit" class="btn btn-primary">保存</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ステータス変更モーダル -->
+  <div id="statusModal" class="modal">
+    <div class="modal-content status-modal-content">
+      <div class="modal-header">
+        <h2>ステータス変更</h2>
+        <button class="modal-close" onclick="closeStatusModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="statusOrderKey">
+        
+        <dl class="status-info">
+          <dt>受注番号</dt>
+          <dd id="statusOrderNumber">-</dd>
+          <dt>現在のステータス</dt>
+          <dd id="currentStatus">-</dd>
+        </dl>
+        
+        <div class="form-group">
+          <label for="newStatus">新しいステータス</label>
+          <select id="newStatus" class="filter-select" style="width: 100%;">
+            <option value="未処理">未処理</option>
+            <option value="処理中">処理中</option>
+            <option value="出荷済み">出荷済み</option>
+            <option value="キャンセル">キャンセル</option>
+          </select>
+        </div>
+        
+        <div class="form-group" style="margin-top: 16px;">
+          <label for="statusMemo">メモ</label>
+          <textarea id="statusMemo" rows="3" class="filter-input" style="width: 100%;"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeStatusModal()">キャンセル</button>
+          <button type="button" class="btn btn-primary" onclick="updateStatus()">更新</button>
+        </div>
       </div>
     </div>
   </div>
