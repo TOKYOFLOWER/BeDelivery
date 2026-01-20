@@ -39,7 +39,7 @@ async function callGasApi(action, data = {}) {
     const response = await fetch(GAS_API_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       },
       body: JSON.stringify({
         action: action,
