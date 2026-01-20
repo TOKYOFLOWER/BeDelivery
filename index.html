@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>花定期配送管理システム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダー -->
+    <header class="header">
+      <h1>🌸 花定期配送管理システム</h1>
+      <div class="header-actions">
+        <button id="refreshBtn" class="btn btn-secondary">
+          <span class="icon">🔄</span> 更新
+        </button>
+        <button id="downloadBtn" class="btn btn-primary">
+          <span class="icon">📥</span> 助ネコ形式でダウンロード
+        </button>
+        <button id="newOrderBtn" class="btn btn-success">
+          <span class="icon">➕</span> 新規注文
+        </button>
+      </div>
+    </header>
+
+    <!-- 統計情報 -->
+    <div class="stats" id="stats">
+      <div class="stat-card">
+        <div class="stat-label">全注文</div>
+        <div class="stat-value" id="statTotal">-</div>
+      </div>
+      <div class="stat-card stat-new">
+        <div class="stat-label">未処理</div>
+        <div class="stat-value" id="statNew">-</div>
+      </div>
+      <div class="stat-card stat-processing">
+        <div class="stat-label">処理中</div>
+        <div class="stat-value" id="statProcessing">-</div>
+      </div>
+      <div class="stat-card stat-shipped">
+        <div class="stat-label">出荷済み</div>
+        <div class="stat-value" id="statShipped">-</div>
+      </div>
+      <div class="stat-card stat-cancelled">
+        <div class="stat-label">キャンセル</div>
+        <div class="stat-value" id="statCancelled">-</div>
+      </div>
+    </div>
+
+    <!-- フィルター -->
+    <div class="filters">
+      <div class="filter-group">
+        <label for="statusFilter">ステータス:</label>
+        <select id="statusFilter" class="filter-select">
+          <option value="">すべて</option>
+          <option value="未処理">未処理</option>
+          <option value="処理中">処理中</option>
+          <option value="出荷済み">出荷済み</option>
+          <option value="キャンセル">キャンセル</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="searchText">検索:</label>
+        <input type="text" id="searchText" class="filter-input" placeholder="受注番号、注文者名、商品名など">
+      </div>
+      <button id="applyFilterBtn" class="btn btn-secondary">フィルタ適用</button>
+    </div>
+
+    <!-- ローディング -->
+    <div id="loading" class="loading" style="display: none;">
+      <div class="spinner"></div>
+      <p>読み込み中...</p>
+    </div>
+
+    <!-- 注文一覧 -->
+    <div class="table-container">
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ステータス</th>
+            <th>受注番号</th>
+            <th>注文日</th>
+            <th>お届け希望日</th>
+            <th>注文者</th>
+            <th>お届け先</th>
+            <th>商品名</th>
+            <th>個数</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="orderTableBody">
+          <tr>
+            <td colspan="10" style="text-align: center; padding: 40px;">
+              データを読み込んでいます...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- メッセージ表示エリア -->
+    <div id="message" class="message" style="display: none;"></div>
+  </div>
+
+  <!-- モーダル: 注文フォーム -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">新規注文登録</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="orderForm">
+          <input type="hidden" id="orderId">
+          
+          <!-- 基本情報 -->
+          <fieldset>
+            <legend>基本情報</legend>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="orderNumber">受注番号 *</label>
+                <input type="text" id="orderNumber" required>
+              </div>
+              <div class="form-group">
+                <label for="orderDate">注文日 *</label>
+                <input type="date" id="orderDate" required>
+              </div>
+              <div class="form-group">
+                <label for="deliveryDate">お届け希望日</label>
+                <input type="date" id="deliveryDate">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 注文者情報 -->
+          <fieldset>
+            <legend>注文者情報</legend>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerLastName">姓 *</label>
+                <input type="text" id="customerLastName" required>
+              </div>
+              <div class="form-group">
+                <label for="customerFirstName">名 *</label>
+                <input type="text" id="customerFirstName" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerLastNameKana">姓カナ *</label>
+                <input type="text" id="customerLastNameKana" required>
+              </div>
+              <div class="form-group">
+                <label for="customerFirstNameKana">名カナ *</label>
+                <input type="text" id="customerFirstNameKana" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerZipCode">郵便番号 *</label>
+                <input type="text" id="customerZipCode" placeholder="1234567" required>
+              </div>
+              <div class="form-group">
+                <label for="customerPrefecture">都道府県 *</label>
+                <input type="text" id="customerPrefecture" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerCity">市区町村 *</label>
+                <input type="text" id="customerCity" required>
+              </div>
+              <div class="form-group">
+                <label for="customerAddress">住所詳細 *</label>
+                <input type="text" id="customerAddress" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerBuilding">建物名</label>
+                <input type="text" id="customerBuilding">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerPhone">電話番号 *</label>
+                <input type="tel" id="customerPhone" placeholder="03-1234-5678" required>
+              </div>
+              <div class="form-group">
+                <label for="customerEmail">メールアドレス *</label>
+                <input type="email" id="customerEmail" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- お届け先情報 -->
+          <fieldset>
+            <legend>お届け先情報</legend>
+            <div class="form-row">
+              <button type="button" class="btn btn-secondary" onclick="copyCustomerInfo()">
+                注文者情報をコピー
+              </button>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientLastName">姓 *</label>
+                <input type="text" id="recipientLastName" required>
+              </div>
+              <div class="form-group">
+                <label for="recipientFirstName">名 *</label>
+                <input type="text" id="recipientFirstName" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientLastNameKana">姓カナ *</label>
+                <input type="text" id="recipientLastNameKana" required>
+              </div>
+              <div class="form-group">
+                <label for="recipientFirstNameKana">名カナ *</label>
+                <input type="text" id="recipientFirstNameKana" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientZipCode">郵便番号 *</label>
+                <input type="text" id="recipientZipCode" placeholder="1234567" required>
+              </div>
+              <div class="form-group">
+                <label for="recipientPrefecture">都道府県 *</label>
+                <input type="text" id="recipientPrefecture" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientCity">市区町村 *</label>
+                <input type="text" id="recipientCity" required>
+              </div>
+              <div class="form-group">
+                <label for="recipientAddress">住所詳細 *</label>
+                <input type="text" id="recipientAddress" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientBuilding">建物名</label>
+                <input type="text" id="recipientBuilding">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientPhone">電話番号 *</label>
+                <input type="tel" id="recipientPhone" placeholder="03-1234-5678" required>
+              </div>
+              <div class="form-group">
+                <label for="deliveryTime">配送時間帯</label>
+                <select id="deliveryTime">
+                  <option value="">指定なし</option>
+                  <option value="午前中">午前中</option>
+                  <option value="14時-16時">14時-16時</option>
+                  <option value="16時-18時">16時-18時</option>
+                  <option value="18時-20時">18時-20時</option>
+                  <option value="19時-21時">19時-21時</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 商品情報 -->
+          <fieldset>
+            <legend>商品情報</legend>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="productCode">商品コード *</label>
+                <input type="text" id="productCode" required>
+              </div>
+              <div class="form-group">
+                <label for="productName">商品名 *</label>
+                <input type="text" id="productName" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="quantity">個数 *</label>
+                <input type="number" id="quantity" min="1" value="1" required>
+              </div>
+              <div class="form-group">
+                <label for="unitPrice">単価 *</label>
+                <input type="number" id="unitPrice" min="0" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="remarks">備考</label>
+                <textarea id="remarks" rows="3"></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">キャンセル</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

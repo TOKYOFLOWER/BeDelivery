@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    color: #2c3e50;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  /* 統計カード */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .stat-new .stat-value { color: #e74c3c; }
+  .stat-processing .stat-value { color: #3498db; }
+  .stat-shipped .stat-value { color: #27ae60; }
+  .stat-cancelled .stat-value { color: #95a5a6; }
+
+  /* フィルター */
+  .filters {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .filter-group label {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .filter-select,
+  .filter-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .filter-input {
+    min-width: 300px;
+  }
+
+  /* テーブル */
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+  }
+
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .order-table thead {
+    background-color: #34495e;
+    color: white;
+  }
+
+  .order-table th,
+  .order-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .order-table th {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .order-table td {
+    font-size: 14px;
+  }
+
+  .order-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  /* ステータスバッジ */
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .status-new {
+    background-color: #fee;
+    color: #e74c3c;
+  }
+
+  .status-processing {
+    background-color: #e3f2fd;
+    color: #3498db;
+  }
+
+  .status-shipped {
+    background-color: #e8f5e9;
+    color: #27ae60;
+  }
+
+  .status-cancelled {
+    background-color: #f5f5f5;
+    color: #95a5a6;
+  }
+
+  /* ボタン */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .btn-primary {
+    background-color: #3498db;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #2980b9;
+  }
+
+  .btn-success {
+    background-color: #27ae60;
+    color: white;
+  }
+
+  .btn-success:hover {
+    background-color: #229954;
+  }
+
+  .btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #7f8c8d;
+  }
+
+  .btn-icon {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s;
+  }
+
+  .btn-icon:hover {
+    transform: scale(1.2);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 5px;
+  }
+
+  .icon {
+    font-size: 16px;
+  }
+
+  /* ローディング */
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .loading p {
+    color: white;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  /* メッセージ */
+  .message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 10000;
+    font-weight: 600;
+  }
+
+  .message-success {
+    background-color: #27ae60;
+    color: white;
+  }
+
+  .message-error {
+    background-color: #e74c3c;
+    color: white;
+  }
+
+  .message-info {
+    background-color: #3498db;
+    color: white;
+  }
+
+  /* モーダル */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 2% auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 20px;
+    background-color: #34495e;
+    color: white;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .modal-close:hover {
+    color: #ddd;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  /* フォーム */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  fieldset {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+  }
+
+  legend {
+    font-weight: 600;
+    color: #2c3e50;
+    padding: 0 10px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+  }
+
+  /* レスポンシブ */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      gap: 15px;
+      align-items: stretch;
+    }
+
+    .header-actions {
+      flex-direction: column;
+    }
+
+    .filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .filter-input {
+      min-width: auto;
+      width: 100%;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+      width: 95%;
+      margin: 5% auto;
+    }
+
+    .order-table {
+      font-size: 12px;
+    }
+
+    .order-table th,
+    .order-table td {
+      padding: 8px;
+    }
+  }
