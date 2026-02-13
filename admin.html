@@ -15,6 +15,245 @@
       font-size: 0.75rem;
       margin-left: 10px;
     }
+
+      /* --- インポートセクション --- */
+  .import-section {
+    background: linear-gradient(135deg, #e8eaf6, #c5cae9);
+    border: 2px dashed #7986cb;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .import-section h3 {
+    margin: 0 0 12px 0;
+    color: #283593;
+    font-size: 1.05rem;
+  }
+  .import-section-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-import {
+    background: linear-gradient(135deg, #5c6bc0, #3949ab);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-import:hover {
+    background: linear-gradient(135deg, #3949ab, #283593);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(57,73,171,0.35);
+  }
+  .import-hint {
+    color: #5c6bc0;
+    font-size: 0.82rem;
+  }
+
+  /* --- インポートモーダル --- */
+  .import-modal-content {
+    max-width: 900px;
+    width: 95%;
+  }
+
+  /* ドロップゾーン */
+  .import-drop-zone {
+    border: 2px dashed #bdbdbd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: #fafafa;
+    margin-bottom: 16px;
+  }
+  .import-drop-zone:hover,
+  .import-drop-zone.drag-over {
+    border-color: #5c6bc0;
+    background: #e8eaf6;
+  }
+  .import-drop-zone .drop-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .import-drop-zone .drop-text {
+    color: #757575;
+    font-size: 0.9rem;
+  }
+  .import-drop-zone .drop-text strong {
+    color: #5c6bc0;
+    cursor: pointer;
+  }
+  .import-file-name {
+    color: #5c6bc0;
+    font-weight: bold;
+    margin-top: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* プレビューセクション */
+  .import-preview-section {
+    margin-top: 20px;
+  }
+  .import-summary {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .import-count {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .import-count-add      { background: #e8f5e9; color: #2e7d32; }
+  .import-count-update   { background: #fff8e1; color: #f57f17; }
+  .import-count-delete   { background: #ffebee; color: #c62828; }
+  .import-count-unchanged { background: #f5f5f5; color: #757575; }
+
+  /* 差分テーブル */
+  .diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .diff-table th {
+    background: #eeeeee;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+    border-bottom: 2px solid #bdbdbd;
+  }
+  .diff-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  .diff-row-unchanged {
+    opacity: 0.55;
+  }
+  .diff-checkbox-cell {
+    width: 32px;
+    text-align: center;
+  }
+  .diff-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .diff-name-cell {
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  .diff-flag {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #1565c0;
+    font-size: 0.72rem;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+  .diff-detail-cell {
+    max-width: 400px;
+  }
+  .diff-detail {
+    color: #616161;
+    font-size: 0.82rem;
+  }
+  .diff-detail-delete {
+    color: #c62828;
+    font-style: italic;
+  }
+  .diff-field {
+    font-weight: 600;
+    color: #424242;
+    margin-right: 4px;
+  }
+  .diff-change {
+    margin-bottom: 4px;
+  }
+  .diff-old {
+    text-decoration: line-through;
+    color: #e53935;
+    font-size: 0.8rem;
+  }
+  .diff-new {
+    color: #2e7d32;
+    font-weight: 500;
+  }
+
+  /* 差分テーブルのスクロール */
+  .diff-table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+
+  /* インポートローディング */
+  .import-loading {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    color: #5c6bc0;
+  }
+  .import-loading .spinner-small {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e8eaf6;
+    border-top: 3px solid #5c6bc0;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* インポートアクション */
+  .import-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+  }
+  .btn-import-confirm {
+    background: linear-gradient(135deg, #43a047, #2e7d32);
+    color: #fff;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-import-confirm:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    transform: translateY(-1px);
+  }
+  .btn-import-confirm:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
   </style>
 </head>
 <body>
@@ -69,6 +308,19 @@
         <button id="downloadAllBtn" class="btn btn-secondary">
           <span>📥</span> 全件ダウンロード
         </button>
+      </div>
+    </div>
+
+    <!-- インポートセクション -->
+    <div class="import-section">
+      <h3>📤 Excelインポート</h3>
+      <div class="import-section-row">
+        <button id="importBtn" class="btn-import">
+          <span>📁</span> xlsxファイルを取り込む
+        </button>
+        <span class="import-hint">
+          お花宛先リスト(.xlsx)をアップロードして、既存データと照合・一括更新できます
+        </span>
       </div>
     </div>
 
@@ -388,7 +640,104 @@
     </div>
   </div>
 
+  <!-- インポートモーダル -->
+  <div id="importModal" class="modal">
+    <div class="modal-content import-modal-content">
+      <div class="modal-header">
+        <h2>📤 Excelインポート</h2>
+        <button class="modal-close" onclick="closeImportModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <!-- ドロップゾーン -->
+        <div id="importDropZone" class="import-drop-zone" onclick="document.getElementById('importFile').click()">
+          <span class="drop-icon">📎</span>
+          <div class="drop-text">
+            xlsxファイルをここにドロップ、または<strong>ファイルを選択</strong>
+          </div>
+          <div id="importFileName" class="import-file-name"></div>
+        </div>
+        <input type="file" id="importFile" accept=".xlsx,.xls" style="display:none;">
+
+        <!-- ローディング -->
+        <div id="importLoading" class="import-loading">
+          <div class="spinner-small"></div>
+          <span>データを解析中...</span>
+        </div>
+
+        <!-- プレビューセクション -->
+        <div id="importPreviewSection" class="import-preview-section" style="display:none;">
+          <h3 style="margin: 0 0 12px; font-size: 1rem;">照合結果</h3>
+
+          <!-- サマリー -->
+          <div id="importSummary" class="import-summary"></div>
+
+          <!-- 差分テーブル -->
+          <div class="diff-table-wrapper">
+            <table class="diff-table">
+              <thead>
+                <tr>
+                  <th style="width:32px;">
+                    <input type="checkbox" id="importCheckAll" checked
+                           onchange="toggleAllImportChecks(this.checked)">
+                  </th>
+                  <th style="width:70px;">種別</th>
+                  <th style="width:120px;">宛名</th>
+                  <th>変更内容</th>
+                </tr>
+              </thead>
+              <tbody id="importPreviewBody"></tbody>
+            </table>
+          </div>
+
+          <!-- アクション -->
+          <div class="import-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeImportModal()">キャンセル</button>
+            <button type="button" id="importConfirmBtn" class="btn-import-confirm" disabled>
+              インポート対象を選択してください
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
   <script src="config.js"></script>
   <script src="app.js"></script>
+
+  <!-- SheetJS (xlsx パーサー) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- インポート機能 -->
+  <script src="import.js"></script>
+  <script>
+    // import.js のリスナーを初期化（app.js の setupEventListeners と同様）
+    document.addEventListener('DOMContentLoaded', function() {
+      setupImportListeners();
+    });
+
+    // 全チェックトグル
+    function toggleAllImportChecks(checked) {
+      document.querySelectorAll('.import-check').forEach(cb => {
+        cb.checked = checked;
+        const idx = parseInt(cb.dataset.index);
+        if (importDiffData[idx]) {
+          importDiffData[idx].checked = checked;
+        }
+      });
+      updateImportButtonCount();
+    }
+
+    // モーダル外クリックで閉じる（既存の window.onclick を拡張）
+    const originalOnClick = window.onclick;
+    window.onclick = function(event) {
+      if (originalOnClick) originalOnClick(event);
+      const importModal = document.getElementById('importModal');
+      if (event.target === importModal) {
+        closeImportModal();
+      }
+    };
+  </script>
+  
 </body>
 </html>
