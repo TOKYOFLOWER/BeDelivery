@@ -524,8 +524,8 @@ function detectChanges(excelRow, existing) {
   ];
 
   fields.forEach(({ key, label }) => {
-    const newVal = (excelRow[key] || '').trim();
-    const oldVal = (existing[key] || '').trim();
+    const newVal = String(excelRow[key] || '').trim();
+    const oldVal = String(existing[key] || '').trim();
     if (newVal && newVal !== oldVal) {
       changes.push({ field: label, oldValue: oldVal, newValue: newVal });
     }
@@ -661,6 +661,17 @@ function updateImportButtonCount() {
 function truncateStr(str, maxLen) {
   if (!str) return '';
   return str.length > maxLen ? str.substring(0, maxLen) + '…' : str;
+}
+
+/** HTML特殊文字をエスケープ */
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 
