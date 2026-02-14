@@ -30,13 +30,13 @@ const DEFAULT_ORDERER = {
   customerLastName: '一般社団法人',
   customerFirstName: 'BeDelivery',
   customerCompany: '',
-  customerEmail: 'tokyoflowerco.ltd@gmail.com',
-  customerPhone: '',
-  customerZipCode: '',
-  customerPrefecture: '',
-  customerCity: '',
-  customerAddress: '',
-  customerBuilding: ''
+  customerEmail: 'contact@be-delivery.jp',
+  customerPhone: '03-4500-7376',
+  customerZipCode: '1250041',
+  customerPrefecture: '東京都',
+  customerCity: '葛飾区',
+  customerAddress: '東金町1丁目45-12-19',
+  customerBuilding: 'ASビル'
 };
 
 /** 固定の商品情報 */
@@ -255,7 +255,8 @@ function normalizeRow(row) {
 
     // 配送日
     deliveryDate: deliveryDate,
-
+    deliveryTime: '午前中',
+    
     // メッセージ
     orderRemarks: message,
 
@@ -783,7 +784,7 @@ function buildOrderData(excelRow) {
     recipientAddress: excelRow.recipientAddress,
     recipientBuilding: excelRow.recipientBuilding,
     recipientPhone: excelRow.recipientPhone,
-    deliveryTime: '',
+    deliveryTime: excelRow.deliveryTime || '午前中',
     productCode: excelRow.productCode,
     productName: excelRow.productName,
     quantity: excelRow.quantity,
