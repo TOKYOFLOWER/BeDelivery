@@ -829,8 +829,14 @@ function closeImportModal() {
   importDiffData = [];
 }
 
-/** インポートローディング表示 */
-function showImportLoading(show) {
+/** インポートローディング表示（メッセージ付き） */
+function showImportLoading(show, message) {
   const loader = document.getElementById('importLoading');
-  if (loader) loader.style.display = show ? 'flex' : 'none';
+  if (loader) {
+    loader.style.display = show ? 'flex' : 'none';
+    if (message) {
+      const msgEl = loader.querySelector('span');
+      if (msgEl) msgEl.textContent = message;
+    }
+  }
 }
